@@ -35,11 +35,12 @@ for x in url_list:
 
     movie_budget= pd.concat([movie_budget, df], ignore_index=True)
 
-#export as csv
-
+#clean up df
 movie_budget = movie_budget.sort_values(by='ProductionBudget', ascending=False)
 movie_budget = movie_budget.apply(lambda x: x.str.replace(',','')) #remove commas
 movie_budget = movie_budget.apply(lambda x: x.str.replace('$','')) #remove $ sign
+movie_budget.columns = [x.lower() for x in movie_budget.columns]
 
+#export as csv
 movie_budget.to_csv('movie_budget.csv',
              encoding='utf-8', index=False)
