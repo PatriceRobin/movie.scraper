@@ -16,7 +16,7 @@ headers = {
 
 
 url_list = []
-for i in range(1,6101,100): #until 6001
+for i in range(1,6101,100): #6101 until 6001
     url_list.append(i)
 
 #url_list = [1,101]
@@ -31,7 +31,7 @@ for x in url_list:
     table = soup.find_all('table')
     df = pd.read_html(str(table))[0]
     df = pd.DataFrame(df)
-    df = df.loc[:, ["Movie","ProductionBudget","DomesticGross","WorldwideGross"]] #select needed columns
+    df = df.loc[:, ["ReleaseDate","Movie","ProductionBudget","DomesticGross","WorldwideGross"]] #select needed columns
 
     movie_budget= pd.concat([movie_budget, df], ignore_index=True)
 
@@ -39,8 +39,13 @@ for x in url_list:
 movie_budget = movie_budget.sort_values(by='ProductionBudget', ascending=False)
 movie_budget = movie_budget.apply(lambda x: x.str.replace(',','')) #remove commas
 movie_budget = movie_budget.apply(lambda x: x.str.replace('$','')) #remove $ sign
+movie_budget['year'] = movie_budget['ReleaseDate'].str[-4:]
+movie_budget = movie_budget.drop(['ReleaseDate'], axis = 1)
 movie_budget.columns = [x.lower() for x in movie_budget.columns]
 
+
+"""
 #export as csv
 movie_budget.to_csv('movie_budget.csv',
              encoding='utf-8', index=False)
+"""
