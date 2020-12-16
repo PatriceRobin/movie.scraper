@@ -44,8 +44,6 @@ movie_budget = movie_budget.drop(['ReleaseDate'], axis = 1)
 movie_budget.columns = [x.lower() for x in movie_budget.columns]
 
 
-"""
 #export as csv
-movie_budget.to_csv('movie_budget.csv',
+movie_budget.to_csv('movie_budget_numbers.csv',
              encoding='utf-8', index=False)
-"""
